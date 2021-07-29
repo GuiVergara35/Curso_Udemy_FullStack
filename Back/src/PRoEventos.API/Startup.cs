@@ -1,16 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PRoEventos.API.Data;
 
 namespace PRoEventos.API
 {
@@ -26,6 +22,12 @@ namespace PRoEventos.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = "Server=localhost;Port=3306;Database=proeventos;Uid=root;Pwd=!Mos_Dge7*";
+
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 26));
+
+            services.AddDbContext<ApplicationDbContext>(
+                options => options.UseMySql(connectionString, serverVersion));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
