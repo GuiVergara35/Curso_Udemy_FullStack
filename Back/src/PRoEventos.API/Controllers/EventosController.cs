@@ -11,11 +11,11 @@ namespace PRoEventos.API.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class EventoController : ControllerBase
+    public class EventosController : ControllerBase
     {
 
         private readonly ApplicationDbContext _context;
-        public EventoController(ApplicationDbContext context)
+        public EventosController(ApplicationDbContext context)
         {
             _context = context;
         }
