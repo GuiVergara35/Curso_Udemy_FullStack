@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 
 @Component({
@@ -9,9 +10,11 @@ import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 export class NavComponent implements OnInit {
   isCollapsed = true;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
-
+  showMenu(): boolean {
+    return this.router.url != '/user/login';
+  }
 }
