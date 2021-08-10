@@ -16,36 +16,37 @@ export class EventoListaComponent implements OnInit {
   modalRef!: BsModalRef;
   public eventos: Evento[] = [];
   public eventosFiltrados: Evento[] = [];
+  public eventoId = 0;
 
   widthImg: number = 150;
-  marginImg: number =3;
+  marginImg: number = 3;
   showImg: boolean = true;
   private _filterList: string = '';
 
-public get filterList(): string {
-  return this._filterList;
-}
+  public get filterList(): string {
+    return this._filterList;
+  }
 
-public set filterList(value: string){
-  this._filterList = value;
-  this.eventosFiltrados = this.filterList ? this.filterEvents(this.filterList) : this.eventos;
-}
+  public set filterList(value: string) {
+    this._filterList = value;
+    this.eventosFiltrados = this.filterList ? this.filterEvents(this.filterList) : this.eventos;
+  }
 
-filterEvents(filterBy: string): Evento[] {
-  filterBy = filterBy.toLocaleLowerCase();
-  return this.eventos.filter(
-    (evento: { tema: string; local: string; }) => evento.tema.toLocaleLowerCase().indexOf(filterBy) !== -1 ||
-    evento.local.toLocaleLowerCase().indexOf(filterBy) !== -1
-  );
-}
+  filterEvents(filterBy: string): Evento[] {
+    filterBy = filterBy.toLocaleLowerCase();
+    return this.eventos.filter(
+      (evento: { tema: string; local: string; }) => evento.tema.toLocaleLowerCase().indexOf(filterBy) !== -1 ||
+        evento.local.toLocaleLowerCase().indexOf(filterBy) !== -1
+    );
+  }
 
   constructor(
     private eventoService: EventoService,
     private modalService: BsModalService,
-    private toastr : ToastrService,
+    private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private router: Router
-    ) { }
+  ) { }
 
   public ngOnInit(): void {
     this.getEventos();
@@ -53,7 +54,7 @@ filterEvents(filterBy: string): Evento[] {
 
   }
 
-  public hideImg(){
+  public hideImg() {
     this.showImg = !this.showImg;
   }
 
@@ -72,14 +73,34 @@ filterEvents(filterBy: string): Evento[] {
     });
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  openModal(event: any, template: TemplateRef<any>, eventoId: number): void {
+    event.stopPropagation();
+    this.eventoId = eventoId
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 
   confirm(): void {
 
     this.modalRef.hide();
-    this.toastr.success('Deletado com sucesso!', 'Deletado')
+    this.spinner.show();
+    this.eventoService.deleteEvento(this.eventoId).subscribe(
+      (result: any) => {
+        console.log(result)
+        this.toastr.success('Deletado com sucesso!', 'Deletado');
+        this.spinner.hide();
+        this.getEventos();
+
+      },
+      (error: any) => {
+        console.error(Error);
+        this.toastr.error('Erro ao tentar deletar o evento', 'Erro!');
+        this.spinner.hide();
+      },
+      () => {
+
+      },
+    )
+
   }
 
   decline(): void {

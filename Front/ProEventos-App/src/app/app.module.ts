@@ -26,6 +26,11 @@ import { EventoListaComponent } from './components/eventos/evento-lista/evento-l
 import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { ptBrLocale } from 'ngx-bootstrap/locale';
+
+defineLocale('pt-br', ptBrLocale);
 
 @NgModule({
   declarations: [
@@ -35,15 +40,15 @@ import { RegistrationComponent } from './components/user/registration/registrati
     ContatosComponent,
     DashboardComponent,
     PerfilComponent,
-      NavComponent,
-      DateTimeFormatPipe,
-      TituloComponent,
-      EventoDetalheComponent,
-      EventoListaComponent,
-      UserComponent,
-      LoginComponent,
-      RegistrationComponent
-   ],
+    NavComponent,
+    DateTimeFormatPipe,
+    TituloComponent,
+    EventoDetalheComponent,
+    EventoListaComponent,
+    UserComponent,
+    LoginComponent,
+    RegistrationComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -57,11 +62,12 @@ import { RegistrationComponent } from './components/user/registration/registrati
     ModalModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 5000,
-      positionClass : 'toast-bottom-right',
-      preventDuplicates : true,
-      progressBar : true,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      progressBar: true,
     }),
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    BsDatepickerModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],

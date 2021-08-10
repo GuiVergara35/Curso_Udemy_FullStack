@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using ProEventos.Persistence;
-using ProEventos.Domain;
-using ProEventos.Persistence.Context;
 using ProEventos.Application.Interfaces;
 using Microsoft.AspNetCore.Http;
+using ProEventos.Application.Dtos;
 
 namespace PRoEventos.API.Controllers
 {
@@ -30,7 +25,8 @@ namespace PRoEventos.API.Controllers
             {
                 var eventos = await _service.GetAllEventosAsync(true);
                 if (eventos == null)
-                    return NotFound("Nenhum evento encontrado.");
+                    return NoContent();
+
 
                 return Ok(eventos);
             }
@@ -49,7 +45,7 @@ namespace PRoEventos.API.Controllers
             {
                 var evento = await _service.GetEventosByIdAsync(id, true);
                 if (evento == null)
-                    return NotFound("Evento não encontrado.");
+                    return NoContent();
 
                 return Ok(evento);
             }
@@ -68,7 +64,7 @@ namespace PRoEventos.API.Controllers
             {
                 var eventos = await _service.GetAllEventosByTemaAsync(tema, true);
                 if (eventos == null)
-                    return NotFound("Eventos com esse tema não encontrados.");
+                    return NoContent();
 
                 return Ok(eventos);
             }
@@ -81,7 +77,7 @@ namespace PRoEventos.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Evento model)
+        public async Task<IActionResult> Post(EventoDto model)
         {
             try
             {
@@ -100,7 +96,7 @@ namespace PRoEventos.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Evento model)
+        public async Task<IActionResult> Put(int id, EventoDto model)
         {
             try
             {
@@ -123,7 +119,7 @@ namespace PRoEventos.API.Controllers
         {
             try
             {
-                return await _service.DeleteEvento(id) ? Ok("Evento deletado.") : BadRequest("Evento não deletado.");
+                return await _service.DeleteEvento(id) ? Ok(new { message = "Evento deletado." }) : BadRequest("Evento não deletado.");
             }
             catch (Exception ex)
             {
