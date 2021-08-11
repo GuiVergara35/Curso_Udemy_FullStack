@@ -9,16 +9,6 @@ import { EventoDetalheComponent } from './components/eventos/evento-detalhe/even
 import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
 import { TituloComponent } from './shared/titulo/titulo.component';
 import { NavComponent } from './shared/nav/nav.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastrModule } from 'ngx-toastr';
-import { NgxSpinnerModule } from 'ngx-spinner';
-
-import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PerfilComponent } from './components/user/perfil/perfil.component';
@@ -26,6 +16,20 @@ import { EventoListaComponent } from './components/eventos/evento-lista/evento-l
 import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
+import { EventoService } from './services/evento.service';
+import { LoteService } from './services/lote.service';
+
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
@@ -69,7 +73,10 @@ defineLocale('pt-br', ptBrLocale);
     NgxSpinnerModule,
     BsDatepickerModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    EventoService,
+    LoteService
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
