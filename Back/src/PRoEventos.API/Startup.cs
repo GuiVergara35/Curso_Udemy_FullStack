@@ -27,7 +27,7 @@ namespace PRoEventos.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = "Server=localhost;Port=3306;Database=proeventos;Uid=root;Pwd=!Mos_Dge7*";
+            var connectionString = "Server=localhost;Port=3306;Database=proeventos;Uid=root;Pwd=*****";
 
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 26));
 
